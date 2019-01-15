@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="page-wrapper">
+        <div>
+            Select a file:
+            <input type="file" id="fileInput">
+        </div>
+        <pre id="fileDisplayArea"><pre>
+    </div>
+    <div class="left-block">
+        <p><h3>Current Account</h3></p>
+        <form id="currentAccountForm"> 
+            <label>Number:</label>
+            <input class="form-control" name="number" >
+            <label>PIN:</label>
+            <input class="form-control" name="pin" >
+            <label>Balance:</label>
+            <input class="form-control" name="balance" >
+            <label>Account creation date:</label>
+            <input class="form-control"  name="creationDate">
+            <label>User:</label>
+            <input class="form-control" name="user">
+        </form>
+        <button class="btn btn-primary" onclick="CreateCurrentAccount()">Create</button>
+        <button class="btn btn-primary" >Read</button>
+        <button class="btn btn-primary" >Update</button>
+            <button class="btn btn-primary" >Delete</button>
+    </div>
+    <div class="right-block">
+        <p><h3>Saving Account</h3></p>
+            <form id="savingAccountForm">
+                <div class="form-group">
+                    <label>Number:</label>
+                    <input class="form-control" name="number" >
+                </div>
+                <div class="form-group">
+                    <label>PIN:</label>
+                    <input class="form-control" name="pin" >
+                </div>
+                <div class="form-group">
+                    <label>Balance:</label>
+                    <input class="form-control" name="balance" >
+                </div>
+                <div class="form-group">
+                    <label>Account creation date:</label>
+                    <input class="form-control"  name="creationDate">
+                </div>
+                <div class="form-group">
+                    <label>User:</label>
+                    <input class="form-control" name="user">
+                </div>
+                <div class="form-group">
+                    <label>Type of contribution</label>
+                    <input class="form-control" > 
+                </div>
+                <button class="btn btn-primary">Create</button>
+                <button class="btn btn-primary">Read</button>
+                <button class="btn btn-primary">Update</button>
+                <button class="btn btn-primary">Delete</button>
+            </form>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

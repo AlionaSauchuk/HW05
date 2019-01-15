@@ -1,0 +1,20 @@
+button{
+    margin: 10 px;
+    padding: 10 px;
+}
+
+body{
+    display: grid;
+}
+
+.left-block{
+    grid-column: 1;
+    width: 40vw;
+    height: 50vh;
+}
+
+.right-block{
+    grid-column: 2;
+    width: 46vw;
+    margin-top: -85px;
+}

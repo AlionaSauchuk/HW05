@@ -1,29 +1,79 @@
+var dataModel;
+
+function parseFile(fileContent){
+    if (dataModel!=undefined){
+        var content = JSON.parse(fileContent);
+        dataModel.setCurrentAccount(Array.from(content["CurrentAccount"]));
+        dataModel.setSavingsAccount(Array.from(content["SavingAccount"]));
+
+        console.log(dataModel.getCurrentAccount().length);
+        console.log(dataModel.getSavingAccount().length);
+    }
+    else{
+        alert('data model is undefined!')
+    }
+
+    return content;
+
+}
+
+function getDataFromForm(formName){
+    var formElements=document.getElementById(formName).elements;    
+    var obj={};
+    for (var i=0; i<formElements.length; i++){
+        obj[formElements[i].name]=formElements[i].value;
+    }
+
+    return JSON.stringify(obj);
+}
+
+function parseDataFromForm(formName){
+    var obj = getDataFromForm(formName);
+    return JSON.parse(obj);
+}
+
 function remove(array, element) {
     return array.filter(el => el !== element);
 }
 
+
 function DataModel() {
 
-    var creationDate = new Date();
+    //=========getter and setter========
+    var dataCurrentAccount = [];
+    var dataSavingsAccount = [];
 
-    this.getCreationDate = function(){
-        if(creationDate!=undefined){
-            return JSON.stringify(creationDate);
+    this.getCurrentAccount = function(){
+        if(CurrentAccount!=undefined){
+            return dataCurrentAccount;
         }
     }
 
-    this.setCreationDate = function(data){        
-        creationDate=JSON.parse(data);
+    this.getSavingAccount = function(){
+        if(dataSavingsAccount!=undefined){
+            return dataSavingsAccount;
+        }
     }
 
-    var dataCurrentAccount = [];
+    this.setCurrentAccount = function(data){        
+        if(data!=undefined){
+            dataCurrentAccount=data;
+        }
+    }
 
-    var dataSavingsAccount = [];
+    this.setSavingsAccount = function(data){        
+        if(data!=undefined){
+            dataSavingsAccount=data;
+        }
+    }
+
+ 
+
+    //===============CRUD================
 
     this.createCurrentAccount = function (obj) {
-
-        var newAccount = JSON.parse(obj);
         dataCurrentAccount.push(newAccount);
+
     }
 
     this.createSavingsAccount = function (obj) {
@@ -101,7 +151,6 @@ function DataModel() {
 }
 
 
-
 function Account(number, PIN, balance, dateOfAccountCreation, user) {
     this.number = number;
     this.PIN = PIN;
@@ -121,25 +170,23 @@ function SavingsAccount(number, PIN, balance, dateOfAccountCreation, user, typeO
     this.typeOfContribution = typeOfContribution;
 }
 
+function CreateCurrentAccount(){
+    var data = parseDataFromForm("currentAccountForm");
+    
+    var newCurrentAccount = new CurrentAccount(dataFromForm.number,
+                                        dataFromForm.pin,
+                                        dataFromForm.balance,
+                                        dataFromForm.creationDate,
+                                        dataFromForm.user);
 
+    dataModel.createCurrentAccount(newCurrentAccount);
+}
 
-var main = function () {
-    var dataModel = new DataModel();
+var main = (function () {
 
-    console.log(JSON.parse(dataModel.getCreationDate()));
-    dataModel.setCreationDate(JSON.stringify(new Date()+6000));
-    console.log(JSON.parse(dataModel.getCreationDate()));
-
-    dataModel.readCurrentAccount();
-    dataModel.readSavingsAccount();
-
+/*
     console.log("====After create:====");
-    var newAccounts1 = [
-        new CurrentAccount(755912, 'sdfghgfd4f', 45.23, '12.12.2017', 'alena'),
-        new CurrentAccount(755913, 'sdfghgfd4f', 45.23, '12.12.2017', 'alena1'),
-        new CurrentAccount(755914, 'sdfghgfd4f', 45.23, '12.12.2017', 'alena2'),
-        new CurrentAccount(755915, 'sdfghgfd4f', 45.23, '12.12.2017', 'alena3')
-    ];
+    
 
 
     var newAccounts2 = [
@@ -151,11 +198,7 @@ var main = function () {
 
     for (var i = 0; i < newAccounts1.length; i++) {
 
-        var newItem1 = JSON.stringify(newAccounts1[i]);
-
-        if (newItem1 != {}) {
-            dataModel.createCurrentAccount(newItem1);
-        }
+       
     }
 
     for (var i = 0; i < newAccounts2.length; i++) {
@@ -190,6 +233,24 @@ var main = function () {
 
     dataModel.readCurrentAccount();
     dataModel.readSavingsAccount();
-}
+    */
+})();
 
-main();
+
+window.onload = function() {
+    var fileInput = document.getElementById('fileInput');
+    var fileDisplayArea = document.getElementById('fileDisplayArea');
+
+    fileInput.addEventListener('change', function(e) {
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+        dataModel = new DataModel();
+
+
+        reader.readAsText(file);
+        
+        reader.onload = function(e) {
+            parseFile(reader.result);
+        }
+    });
+}
