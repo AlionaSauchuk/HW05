@@ -1,3 +1,10 @@
+/*
+1)open index.html
+2) load file data.json
+3) poke on buttons (to delete you need input number-field)
+*/
+
+
 var dataModel;
 
 function parseFile(fileContent){
