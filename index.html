@@ -24,53 +24,41 @@
             <label>Number:</label>
             <input class="form-control" name="number" >
             <label>PIN:</label>
-            <input class="form-control" name="pin" >
+            <input class="form-control" name="PIN" >
             <label>Balance:</label>
             <input class="form-control" name="balance" >
             <label>Account creation date:</label>
-            <input class="form-control"  name="creationDate">
+            <input class="form-control"  name="dateOfAccountCreation">
             <label>User:</label>
             <input class="form-control" name="user">
         </form>
-        <button class="btn btn-primary" onclick="CreateCurrentAccount()">Create</button>
-        <button class="btn btn-primary" >Read</button>
-        <button class="btn btn-primary" >Update</button>
-            <button class="btn btn-primary" >Delete</button>
+        <button class="btn btn-primary" onclick="createCurrAccount()">Create</button>
+        <button class="btn btn-primary" onclick="readCurrAccount()">Read</button>
+        <button class="btn btn-primary" onclick="updateCurrAccount()">Update</button>
+            <button class="btn btn-primary" onclick="deleteCurrAccount()">Delete</button>
     </div>
     <div class="right-block">
         <p><h3>Saving Account</h3></p>
             <form id="savingAccountForm">
-                <div class="form-group">
-                    <label>Number:</label>
-                    <input class="form-control" name="number" >
-                </div>
-                <div class="form-group">
-                    <label>PIN:</label>
-                    <input class="form-control" name="pin" >
-                </div>
-                <div class="form-group">
-                    <label>Balance:</label>
-                    <input class="form-control" name="balance" >
-                </div>
-                <div class="form-group">
-                    <label>Account creation date:</label>
-                    <input class="form-control"  name="creationDate">
-                </div>
-                <div class="form-group">
-                    <label>User:</label>
-                    <input class="form-control" name="user">
-                </div>
-                <div class="form-group">
-                    <label>Type of contribution</label>
-                    <input class="form-control" > 
-                </div>
-                <button class="btn btn-primary">Create</button>
-                <button class="btn btn-primary">Read</button>
-                <button class="btn btn-primary">Update</button>
-                <button class="btn btn-primary">Delete</button>
+                <label>Number:</label>
+                <input class="form-control" name="number" >
+                <label>PIN:</label>
+                <input class="form-control" name="PIN" >
+                <label>Balance:</label>
+                <input class="form-control" name="balance" >
+                <label>Account creation date:</label>
+                <input class="form-control"  name="dateOfAccountCreation">
+                <label>User:</label>
+                <input class="form-control" name="user">
+                <label>Type of contribution</label>
+                <input class="form-control" name="typeOfContribution"> 
             </form>
-        </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <button class="btn btn-primary" onclick="createSavAccount()">Create</button>
+            <button class="btn btn-primary" onclick="readSavAccount()">Read</button>
+            <button class="btn btn-primary" onclick="updateSavAccount()">Update</button>
+            <button class="btn btn-primary" onclick="deleteSavAccount()">Delete</button>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

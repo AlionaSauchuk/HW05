@@ -4,7 +4,7 @@ function parseFile(fileContent){
     if (dataModel!=undefined){
         var content = JSON.parse(fileContent);
         dataModel.setCurrentAccount(Array.from(content["CurrentAccount"]));
-        dataModel.setSavingsAccount(Array.from(content["SavingAccount"]));
+        dataModel.setSavingAccount(Array.from(content["SavingAccount"]));
 
         console.log(dataModel.getCurrentAccount().length);
         console.log(dataModel.getSavingAccount().length);
@@ -41,7 +41,7 @@ function DataModel() {
 
     //=========getter and setter========
     var dataCurrentAccount = [];
-    var dataSavingsAccount = [];
+    var dataSavingAccount = [];
 
     this.getCurrentAccount = function(){
         if(CurrentAccount!=undefined){
@@ -50,8 +50,8 @@ function DataModel() {
     }
 
     this.getSavingAccount = function(){
-        if(dataSavingsAccount!=undefined){
-            return dataSavingsAccount;
+        if(dataSavingAccount!=undefined){
+            return dataSavingAccount;
         }
     }
 
@@ -61,93 +61,96 @@ function DataModel() {
         }
     }
 
-    this.setSavingsAccount = function(data){        
+    this.setSavingAccount = function(data){        
         if(data!=undefined){
-            dataSavingsAccount=data;
+            dataSavingAccount=data;
         }
     }
 
- 
 
     //===============CRUD================
 
     this.createCurrentAccount = function (obj) {
-        dataCurrentAccount.push(newAccount);
-
+        if(dataCurrentAccount!=undefined){
+            dataCurrentAccount.push(obj);
+        } else{
+            console.log("dataCurrentAccount is undefined!")
+        } 
     }
 
-    this.createSavingsAccount = function (obj) {
-
-        var newAccount = JSON.parse(obj);
-        dataSavingsAccount.push(newAccount);
+    this.createSavingAccount = function (obj) {
+        if(dataSavingAccount!=undefined){
+            dataSavingAccount.push(obj);
+        } else{
+            console.log("dataSavingAccount is undefined!")
+        }
     }
 
     this.readCurrentAccount = function () {
         console.log("all current accounts:");
-        dataCurrentAccount.forEach(element => {
-            console.log(element.number + ' - ' + element.user);
+        var data=dataModel.getCurrentAccount();
+
+        data.forEach(function(element){
+            console.log(element);
         });
     }
 
-    this.readSavingsAccount = function () {
+    this.readSavingAccount = function () {
         console.log("all saving accounts:");
-        dataSavingsAccount.forEach(element => {
-            console.log(element.number + ' - ' + element.user + ':' + element.typeOfContribution);
+        var data=dataModel.getSavingAccount();
+
+        data.forEach(function(element){
+            console.log(element);
         });
     }
 
     this.updateCurrentAccount = function (obj) {
-        var newAccount = JSON.parse(obj);
         var indx;
 
         dataCurrentAccount.forEach(element => {
-            if (element.number === newAccount.number) {
+            if (element.number == obj.number) {
                 indx = dataCurrentAccount.indexOf(element);
             }
         });
 
         if(indx>=0){
-            dataCurrentAccount[indx]=newAccount;
-        }
-        
+            dataCurrentAccount[indx]=obj;
+        }else{
+            console.log("No such account")
+        }  
     }
 
-    this.updateSavingsAccount = function (obj) {
-        var newAccount = JSON.parse(obj);
+    this.updateSavingAccount = function (obj) {
         var indx;
 
-        dataSavingsAccount.forEach(element => {
-            if (element.number === newAccount.number) {
-                indx = dataSavingsAccount.indexOf(element);
+        dataSavingAccount.forEach(element => {
+            if (element.number == obj.number) {
+                indx = dataSavingAccount.indexOf(element);
             }
         });
 
         if(indx>=0){
-            dataSavingsAccount[indx]=newAccount;
+            dataSavingAccount[indx]=obj;
+        }else{
+            console.log("No such account")
         }
     }
 
     this.deleteCurrentAccount = function (num) {
-
-
         dataCurrentAccount.forEach(element => {
-            if (element.number === JSON.parse(num)) {
+            if (element.number == JSON.parse(num)) {
                 dataCurrentAccount = remove(dataCurrentAccount, element);
             }
         });
     }
 
-    this.deleteSavingsAccount = function (num) {
-
-        dataSavingsAccount.forEach(element => {
-            if (element.number === JSON.parse(num)) {
-                dataSavingsAccount = remove(dataSavingsAccount, element);
+    this.deleteSavingAccount = function (num) {
+        dataSavingAccount.forEach(element => {
+            if (element.number == JSON.parse(num)) {
+                dataSavingAccount = remove(dataSavingAccount, element);
             }
         });
     }
-
-
-
 }
 
 
@@ -164,77 +167,73 @@ function CurrentAccount(number, PIN, balance, dateOfAccountCreation, user) {
     Account.call(this, number, PIN, balance, dateOfAccountCreation, user);
 }
 
-function SavingsAccount(number, PIN, balance, dateOfAccountCreation, user, typeOfContribution) {
+function SavingAccount(number, PIN, balance, dateOfAccountCreation, user, typeOfContribution) {
     Account.call(this, number, PIN, balance, dateOfAccountCreation, user);
 
     this.typeOfContribution = typeOfContribution;
 }
 
-function CreateCurrentAccount(){
+function createCurrAccount(){
     var data = parseDataFromForm("currentAccountForm");
     
-    var newCurrentAccount = new CurrentAccount(dataFromForm.number,
-                                        dataFromForm.pin,
-                                        dataFromForm.balance,
-                                        dataFromForm.creationDate,
-                                        dataFromForm.user);
+    var newCurrentAccount = 
+    new CurrentAccount(data.number, data.PIN, data.balance, data.dateOfAccountCreation, data.user);
 
     dataModel.createCurrentAccount(newCurrentAccount);
+    console.log("Current account created.")
 }
 
-var main = (function () {
+function readCurrAccount(){
+    dataModel.readCurrentAccount();
+}
 
-/*
-    console.log("====After create:====");
+function updateCurrAccount(){
+    var data = parseDataFromForm("currentAccountForm");
     
+    var newCurrentAccount = 
+    new CurrentAccount(data.number, data.PIN, data.balance, data.dateOfAccountCreation, data.user);
 
+    dataModel.updateCurrentAccount(newCurrentAccount);
+    console.log("Current account updated.")
+}
 
-    var newAccounts2 = [
-        new SavingsAccount(765912, 'sdfghgfd4f', 45.23, '12.12.2017', 'pasha1', 'long-term'),
-        new SavingsAccount(765913, 'sdfghgfd4f', 45.23, '12.12.2017', 'pasha2', 'long-term'),
-        new SavingsAccount(765914, 'sdfghgfd4f', 45.23, '12.12.2017', 'pasha3', 'long-term')
-    ];
+function deleteCurrAccount(){
+    var data = parseDataFromForm("currentAccountForm");
+    
+    dataModel.deleteCurrentAccount(data.number);
+    console.log("Current account with number "+data.number+" deleted.");
+}
 
+function createSavAccount(){
+    var data = parseDataFromForm("savingAccountForm");
+    
+    var newSavingAccount = 
+    new SavingAccount(data.number, data.PIN, data.balance, data.dateOfAccountCreation, data.user, data.typeOfContribution);
 
-    for (var i = 0; i < newAccounts1.length; i++) {
+    dataModel.createSavingAccount(newSavingAccount);
+    console.log("Saving account created.")
+}
 
-       
-    }
+function readSavAccount(){
+    dataModel.readSavingAccount();
+}
 
-    for (var i = 0; i < newAccounts2.length; i++) {
+function updateSavAccount(){
+    var data = parseDataFromForm("savingAccountForm");
+    
+    var newSavingAccount = 
+    new SavingAccount(data.number, data.PIN, data.balance, data.dateOfAccountCreation, data.user, data.typeOfContribution);
 
-        var newItem2 = JSON.stringify(newAccounts2[i]);
+    dataModel.updateSavingAccount(newSavingAccount);
+    console.log("Saving account updated.")
+}
 
-        if (newItem2 != {}) {
-            dataModel.createSavingsAccount(newItem2);
-        }
-    }
-
-    dataModel.readCurrentAccount();
-    dataModel.readSavingsAccount();
-
-    console.log("====After delete:====");
-
-    var num1=755913;
-    var num2=765914;
-
-    dataModel.deleteCurrentAccount(JSON.stringify(num1));
-    dataModel.deleteSavingsAccount(JSON.stringify(num2));
-
-    dataModel.readCurrentAccount();
-    dataModel.readSavingsAccount();
-
-    console.log("====After update:====");
-    var updateItem = new CurrentAccount(755914, 'sdfghgfd4f', 45.23, '12.12.2017', 'olga');
-    dataModel.updateCurrentAccount(JSON.stringify(updateItem));
-
-    var updateItem2 = new SavingsAccount(765912, 'sdfghgfd4f', 45.23, '12.12.2017', 'oleg', 'long-term');
-    dataModel.updateSavingsAccount(JSON.stringify(updateItem2));
-
-    dataModel.readCurrentAccount();
-    dataModel.readSavingsAccount();
-    */
-})();
+function deleteSavAccount(){
+    var data = parseDataFromForm("savingAccountForm");
+    
+    dataModel.deleteSavingAccount(data.number);
+    console.log("Saving account with number "+data.number+" deleted.");
+}
 
 
 window.onload = function() {
@@ -254,3 +253,5 @@ window.onload = function() {
         }
     });
 }
+
+

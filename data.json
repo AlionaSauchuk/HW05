@@ -2,25 +2,25 @@
 {
     "CurrentAccount":[
         {
-            "number": 125698,
+            "number": "125698",
             "PIN": "dfe58r5",
-            "balance": 235.45,
+            "balance": "235.45",
             "dateOfAccountCreation":"12.12.2017",
             "user": "alena"
         },
         {
-            "number": 125699,
+            "number": "125699",
             "PIN": "dfe58r5",
-            "balance": 235.45,
+            "balance": "235.45",
             "dateOfAccountCreation":"12.12.2018",
             "user": "yulya"
         }
     ],
     "SavingAccount":[
         {
-            "number": 125698,
+            "number": "125698",
             "PIN": "dfe58r5",
-            "balance": 235.45,
+            "balance": "235.45",
             "dateOfAccountCreation":"12.12.2017",
             "user": "alena",
             "typeOfContribution":"long-term"

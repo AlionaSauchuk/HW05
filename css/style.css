@@ -1,20 +1,23 @@
-button{
-    margin: 10 px;
-    padding: 10 px;
-}
-
 body{
     display: grid;
+    margin: 10px;
+    padding: 10px;
+}
+
+form{
+    margin: 10px;
+    padding: 10px;
 }
 
 .left-block{
     grid-column: 1;
     width: 40vw;
     height: 50vh;
+
 }
 
 .right-block{
     grid-column: 2;
     width: 46vw;
-    margin-top: -85px;
+    margin-top: -90px;
 }
